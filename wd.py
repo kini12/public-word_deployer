@@ -11,14 +11,66 @@ coded by kiki @VCH
 
 """
 from mailmerge import *
-import datetime
+
 from tkinter import *
 from tkinter import messagebox
 import tkinter as tk
-import os
-import win32com.client as win32
+
+#import win32com.client as win32
+
 from pathlib import Path
 import shutil
+import datetime
+import os
+
+# class 
+class data():
+
+    # button output
+    def open():
+        os.system("explorer output")
+
+    def get_data():
+        global name
+        global first_name
+        global age
+        global location
+        global mail
+
+        name=name.get()
+        first_name = first_name.get()
+        age = age.get()
+        location = location.get()
+        mail = mail.get()
+
+    def send_data():
+        print(name, first_name, age, location, mail)
+        return (name, first_name, age, location, mail)
+
+    def publish():
+        cwd = os.getcwd()
+        path = cwd + r"\output"
+        if os.path.isdir(path) and os.path.exists(path):
+            if len(os.listdir(path)) == 0:
+                data.get_data()
+                print("data copied into the word file")
+
+
+                template_1 = "temp/file.docx"
+                document_1 = MailMerge(template_1)
+                document_1.merge(name_p = name, first_n_p = first_name, age_p = age, location_p = location)
+                document_1.write('file_output.docx')
+
+            else:
+                print("Output not empty. Erase file in it and try again.")
+                messagebox.showinfo("Warning", "Output folder not empty")
+        else:
+            print("Output folder not present anymore")
+            messagebox.showinfo("Warning", "Folder not present anymore")
+  
+                
+
+
 
 # class for the front office aka the visual app 
 class app(tk.Frame):
@@ -57,22 +109,21 @@ if __name__ == "__main__":
     e3=Entry(window, width=40, bd=1, textvariable=age)
     e3.grid(row=4, column=1, pady=2)
     mail=StringVar()
-    e3=Entry(window, width=40, bd=1, textvariable=mail)
-    e3.grid(row=6, column=1, pady=2)
+    e4=Entry(window, width=40, bd=1, textvariable=mail)
+    e4.grid(row=6, column=1, pady=2)
     location=StringVar()
-    e3=Entry(window, width=40, bd=1, textvariable=location)
-    e3.grid(row=8, column=1, pady=2)
+    e5=Entry(window, width=40, bd=1, textvariable=location)
+    e5.grid(row=8, column=1, pady=2)
     
 
 
     
     #Buttons
-    b1=Button(window, text="Publish", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken")
+    b1=Button(window, text="Publish", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken", command = data.get_data)
     b1.grid(row=11, column=1, pady=2)
- 
-    b4=Button(window,text="Output", width=16, borderwidth=1, relief="raised", fg="blue", activebackground="green", overrelief="sunken")
-    b4.grid(row=12, column=1, pady=2)
-    b5=Button(window,text="Fermer", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken", command=window.quit)
-    b5.grid(row=13, column=1, pady=2)
+    b2=Button(window,text="Output", width=16, borderwidth=1, relief="raised", fg="blue", activebackground="green", overrelief="sunken", command=data.open)
+    b2.grid(row=12, column=1, pady=2)
+    b3=Button(window,text="Fermer", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken", command=window.quit)
+    b3.grid(row=13, column=1, pady=2)
     
     window.mainloop()  
