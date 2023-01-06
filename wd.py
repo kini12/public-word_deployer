@@ -6,7 +6,6 @@ Composed of two classes (one Data // one Tkinter) and functions to pre-load the 
 The Tkinter class is about the design, interface, entry fields and buttons. Few variables are declared inside it.
 The Data class is about getting the data from the fields into the mailmerge function.
 
-
 coded by kiki @VCH
 
 """
@@ -19,31 +18,29 @@ import os
 # class 
 class data():
 
-    # button output
+    # open the output folder from within the app
     def open():
         os.system("explorer output")
 
+    # assign var to the fields of the app
     def get_data():
         global name_form
         global first_name_form
         global age_form
         global location_form
         global mail_form
-
         name_form=name_p.get()
         first_name_form = first_name_p.get()
         age_form = age_p.get()
         location_form = location_p.get()
-
         #print(name_form, first_name_form, age_form, location_form, mail_form)
         return (name_form, first_name_form, age_form, location_form)
 
-
+    # function for the publish button
+    # use the output path to store the file with the data inserted from the app
     def publish():
         cwd = os.getcwd()
-        print(cwd)
         path = cwd + r"\output"
-        print(path)
         if os.path.isdir(path) and os.path.exists(path):
             data.get_data()
             print("data is about to be copied into the word file")
@@ -52,12 +49,10 @@ class data():
             document_1.merge(name_w = name_form, first_n_w = first_name_form, age_w = age_form, location_w = location_form)
             document_1.write('output/file_output.docx')
             os.rename('output/file_output.docx', "output/%s_%s.docx" %(first_name_form, name_form))
-            print("data copied") 
+            print("data copied, it'all good") 
         else:
             print("Output not empty. Erase file in it and try again.")
             messagebox.showinfo("Warning", "Output folder not empty")
-
-  
             
 # class for the front office aka the visual app 
 class app(tk.Frame):
@@ -69,9 +64,8 @@ if __name__ == "__main__":
     window.title("Word Deployer")
     window.geometry("350x200")
     window.resizable(width=True, height=True)
-    # 1 these global variables are how we can have a value in the field, and then still use the user input to be what's going to be mailmerged
 
-
+    # theses global variables are the variables used to capture what is in the fields
     global name_p
     name = tk.StringVar(window)
     name.set(name)
@@ -85,6 +79,7 @@ if __name__ == "__main__":
     location = tk.StringVar(window)
     location.set(location)
 
+    # design of the UI 
     #Labels
     l1=Label(window, text= "Name")
     l1.grid(row=0,column=0, pady=2)
@@ -94,8 +89,6 @@ if __name__ == "__main__":
     l3.grid(row=4,column=0, pady=2)
     l4=Label(window, text= "Location")
     l4.grid(row=6,column=0, pady=4)
-
-
 
     #Entry fields
     name_p=StringVar()
