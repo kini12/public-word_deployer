@@ -4,7 +4,7 @@ The UI (created with Tkinter) allows the user to fill up some fields.
 
 Then, the data used in the fields is inserted in a Word document.
 
-How to prepare a Word field with Merge Fields :
+How to prepare a Word field with an addresable variable in Python :
 
 Within Word:
 
