@@ -20,7 +20,7 @@ class data():
 
     # open the output folder from within the app
     def open():
-        os.system("explorer output")
+        os.system("explorer temp")
 
     # assign var to the fields of the app
     def get_data():
@@ -40,15 +40,15 @@ class data():
     # use the output path to store the file with the data inserted from the app
     def publish():
         cwd = os.getcwd()
-        path = cwd + r"\output"
+        path = cwd 
         if os.path.isdir(path) and os.path.exists(path):
             data.get_data()
             print("data is about to be copied into the word file")
             template_1 = "temp/file_1.docx"
             document_1 = MailMerge(template_1)
             document_1.merge(name_w = name_form, first_n_w = first_name_form, age_w = age_form, location_w = location_form)
-            document_1.write('output/file_output.docx')
-            os.rename('output/file_output.docx', "output/%s_%s.docx" %(first_name_form, name_form))
+            document_1.write('file_output.docx')
+            os.rename('file_output.docx', "%s_%s.docx" %(first_name_form, name_form))
             print("data copied, it'all good") 
         else:
             print("Output not empty. Erase file in it and try again.")
@@ -107,7 +107,7 @@ if __name__ == "__main__":
     #Buttons
     b1=Button(window, text="Publish", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken", command = data.publish)
     b1.grid(row=11, column=1, pady=2)
-    b2=Button(window,text="Output", width=16, borderwidth=1, relief="raised", fg="blue", activebackground="green", overrelief="sunken", command=data.open)
+    b2=Button(window,text="Temp", width=16, borderwidth=1, relief="raised", fg="blue", activebackground="green", overrelief="sunken", command=data.open)
     b2.grid(row=12, column=1, pady=2)
     b3=Button(window,text="Fermer", width=16, borderwidth=1, relief="raised", activebackground="green", overrelief="sunken", command=window.quit)
     b3.grid(row=13, column=1, pady=2)
